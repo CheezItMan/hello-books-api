@@ -28,7 +28,7 @@ def books():
         return Response(f"Book {new_book.title} successfully created", status=201)
 
 
-@books_bp.route("/<book_id>", methods=["GET", "PUT"])
+@books_bp.route("/<book_id>", methods=["GET", "PUT", "DELETE"])
 def book(book_id):
     book = Book.query.get(book_id)
 
@@ -47,3 +47,7 @@ def book(book_id):
         db.session.commit()
 
         return Response(f"Book #{book.id} successfully updated", status=200)
+    elif request.method == "DELETE":
+        db.session.delete(book)
+        db.session.commit()
+        return Response(f"Book #{book.id} successfully deleted", status=200)
