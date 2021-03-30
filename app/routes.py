@@ -33,6 +33,8 @@ def book(book_id):
     book = Book.query.get(book_id)
 
     if request.method == "GET":
+        if book == None:
+            return Response("", status=404)
         return {
             "id": book.id,
             "title": book.title,
